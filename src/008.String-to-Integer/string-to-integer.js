@@ -6,6 +6,9 @@ const myAtoi = function(str) {
     let arrVal = str.trim().split('').reverse();
     let shouldGenerateNumArr = true;
 
+    const max = Math.pow(2, 31) - 1;
+    const min = -Math.pow(2, 31);
+
     const onlyNumberArrVal = arrVal.reduce((result = [], strVal, index) => {
         /** 數字才需 push 進去 */
         if (/^[0-9]/.test(strVal)) {
@@ -25,11 +28,16 @@ const myAtoi = function(str) {
         return shouldGenerateNumArr ? result : [];
     },[])
 
-    return onlyNumberArrVal.reduce((result, strVal, index) => {
+    const result = onlyNumberArrVal.reduce((result, strVal, index) => {
         if (strVal === "-") return -result;
         else if (strVal === "+") return result;
         result += strVal * Math.pow(10, index);
+
         return result;
     }, 0)
+
+    if (result > max) return max;
+    else if (result < min) return min;
+    else return result;
 };
 export default myAtoi;
