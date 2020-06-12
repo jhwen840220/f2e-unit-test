@@ -3,7 +3,7 @@
  * @return {number}
  */
 const myAtoi = function(str) {
-    let arrVal = str.split('').reverse();
+    let arrVal = str.trim().split('').reverse();
     let shouldGenerateNumArr = true;
 
     const onlyNumberArrVal = arrVal.reduce((result = [], strVal, index) => {
@@ -16,14 +16,18 @@ const myAtoi = function(str) {
         }
         else shouldGenerateNumArr = false;
 
-        /** 最後一個字元為 "-"，就補回去 */
-        if (index + 1 === arrVal.length && strVal === "-") result.push(strVal);
+        /** 最後一個字元為 "-"，就補回去，且讓 Number Array 可以 return 出去 */
+        if (index + 1 === arrVal.length && (strVal === "-" || strVal === "+")) {
+            result.push(strVal);
+            shouldGenerateNumArr = true;
+        }
 
-        return result;
+        return shouldGenerateNumArr ? result : [];
     },[])
 
     return onlyNumberArrVal.reduce((result, strVal, index) => {
         if (strVal === "-") return -result;
+        else if (strVal === "+") return result;
         result += strVal * Math.pow(10, index);
         return result;
     }, 0)
