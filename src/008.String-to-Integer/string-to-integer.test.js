@@ -44,4 +44,22 @@ describe("String to Integer (atoi)", () => {
       //assert
      expect(myAtoi(input)).toEqual(expected);
     });
+
+    test('Input:2147483648, target=2147483647', () => {
+      const input = '2147483648'
+      const expected = 2147483647
+      expect(myAtoi(input)).toEqual(expected)
+    });
+
+    test('Input:+0 000000000012345678, target=0', () => {
+        const input = '  +0 000000000012345678'
+        const expected = 0
+        expect(myAtoi(input)).toEqual(expected)
+    });
+
+    test('Input:.1, target=0', () => {
+        const input = ' .1'
+        const expected = 0
+        expect(myAtoi(input)).toEqual(expected)
+    });
   });
